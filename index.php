@@ -32,7 +32,7 @@
         <div class="footer-content content">
           <form id="post-form" class="post-form">
               <input id="post-form-image_url" class="post-form__input" type="text" name="image-url" placeholder="Image URL">
-              <input id="post-form-comment" class="post-form__input" type="text" name="comment" placeholder="Comment">
+              <input id="post-form-comment" class="post-form__input" type="text" name="message" placeholder="Message">
               <button class="post-form__button btn-flat">Post</button>
           </form>
         </div> 
