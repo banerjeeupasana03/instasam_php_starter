@@ -6,6 +6,10 @@
 
 The entry point of the application.
 
+#### sql
+
+.sql files to help setup the database and add dummy data.
+
 #### api
 
 All of the server side PHP code lives here.
