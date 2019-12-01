@@ -35,3 +35,16 @@ function allPosts() {
   LIMIT 10
   ";
 }
+
+function createAUser($username, $password) {
+  return "
+  INSERT INTO users (username, password)
+  VALUES ('$username', '$password');
+  ";
+}
+
+function findAUser($username){
+  return "
+    SELECT * FROM users WHERE username = '$username';
+  ";
+}
