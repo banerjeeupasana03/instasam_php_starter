@@ -47,11 +47,11 @@ $(function() {
     function showAndHideLoginBtn() {
         var loggedInInfo = getLoginState();
         if (loggedInInfo.hasOwnProperty('username')) {
-            $loginButton.addClass('hide');
+            $loginLink.addClass('hide');
             var displayText = loggedInInfo['username'];
             $headerDiv.append("<h2 id='logged_in_heading'>" + displayText + "</h2>");
         } else {
-            $loginButton.removeClass('hide');
+            $loginLink.removeClass('hide');
             $('#logged_in_heading').remove();
         }
     }
