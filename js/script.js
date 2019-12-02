@@ -8,6 +8,8 @@ $(function() {
     const $signupButton = $('#signup-button')
     const $loginSignupForm = $("#login-signup-form")
     const $postForm = $("#post-form")
+    const $loginLink = $("#login-link")
+    const $headerDiv = $(".header-content")
 
     function signupLoginData() {
         return $loginSignupForm.serialize()
@@ -17,6 +19,41 @@ $(function() {
             return obj;
         }, {});
         return data;
+    }
+
+    function persistLoginState(username, id) {
+        window.localStorage.setItem('loggedInId', id);
+        window.localStorage.setItem('loggedInUserName', username);
+    }
+
+    function getLoginState() {
+        var loggedInId = window.localStorage.getItem('loggedInId');
+        var loggedInUserName = window.localStorage.getItem('loggedInUserName');
+        var data = {};
+        if (loggedInId && loggedInUserName) { //it means both loggedInId and loggedInUserName are not null or undefined
+            data = {
+                id: loggedInId,
+                username: loggedInUserName
+            }
+        }
+        return data;
+    }
+
+    function clearLoggedInState() {
+        window.localStorage.removeItem('loggedInId');
+        window.localStorage.removeItem('loggedInUserName');
+    }
+
+    function showAndHideLoginBtn() {
+        var loggedInInfo = getLoginState();
+        if (loggedInInfo.hasOwnProperty('username')) {
+            $loginButton.addClass('hide');
+            var displayText = loggedInInfo['username'];
+            $headerDiv.append("<h2 id='logged_in_heading'>" + displayText + "</h2>");
+        } else {
+            $loginButton.removeClass('hide');
+            $('#logged_in_heading').remove();
+        }
     }
 
     function setupSinglePostElement(post) {
@@ -71,6 +108,9 @@ $(function() {
         var data = signupLoginData();
         signUp(data)
             .then(function(resp, status) {
+                console.log(resp);
+                persistLoginState(resp['username'], resp['id']);
+                showAndHideLoginBtn();
                 console.log('resp', resp);
                 console.log('status', status);
             })
@@ -85,6 +125,9 @@ $(function() {
         var data = signupLoginData();
         login(data)
             .then(function(resp, status) {
+                console.log(resp);
+                persistLoginState(resp['username'], resp['id']);
+                showAndHideLoginBtn();
                 console.log('status', status);
                 console.log('resp', resp);
             })
@@ -94,4 +137,5 @@ $(function() {
             })
     });
 
-});
+    showAndHideLoginBtn();
+})
