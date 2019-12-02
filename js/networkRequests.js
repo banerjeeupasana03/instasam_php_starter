@@ -13,7 +13,11 @@ function fetchAllPosts() {
 }
 
 function createNewPost(data) {
-
+    return $.ajax({
+        url: 'api/insta_posts.php',
+        method: 'POST',
+        data: data
+    })
 }
 
 function createNewComment(data) {
