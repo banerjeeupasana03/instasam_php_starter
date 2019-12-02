@@ -12,13 +12,24 @@ $(function() {
     const $headerDiv = $(".header-content")
 
     function signupLoginData() {
-        return $loginSignupForm.serialize()
-        var data = $('#login-signup-form').serializeArray().reduce(function(obj, item) {
+        return $loginSignupForm.serialize();
+    }
+
+    function instaPostData() {
+        // var formData = $postForm.serialize();
+        var formData = $postForm.serializeArray().reduce(function(obj, item) {
             // {name: 'username', value: 'foo'}
             obj[item.name] = item.value;
             return obj;
         }, {});
-        return data;
+        var loginInfo = getLoginState();
+        var userId = 0;
+        if (loginInfo.hasOwnProperty('id')) {
+            userId = loginInfo['id'];
+        }
+        formData['user_id'] = userId;
+        return formData;
+
     }
 
     function persistLoginState(username, id) {
@@ -99,7 +110,17 @@ $(function() {
 
     $postForm.on("submit", function(event) {
         event.preventDefault();
-        console.log("insta post form submitted");
+        var data = instaPostData();
+        console.log(data);
+        var ajaxPromise = createNewPost(data);
+        ajaxPromise.then(function(resp, status) {
+                console.log('resp', resp);
+                console.log('status', status);
+            })
+            .catch(function(err, status) {
+                console.log('error', err);
+                console.log('status', status);
+            })
     })
 
     $signupButton.on('click', function(event) {

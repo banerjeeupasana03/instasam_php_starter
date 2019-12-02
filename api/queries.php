@@ -48,3 +48,10 @@ function findAUser($username){
     SELECT * FROM users WHERE username = '$username';
   ";
 }
+
+function createAPost($userid, $message, $imageUrl){
+  return "
+    INSERT INTO insta_posts (user_id, image_url, message)
+    VALUES ('$userid', '$imageUrl', '$message');
+  ";
+}
